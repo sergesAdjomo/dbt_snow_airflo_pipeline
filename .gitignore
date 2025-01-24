@@ -1,0 +1,22 @@
+# Ignore Python compiled files
+*.pyc
+__pycache__/
+
+# Ignore virtual environment directories
+venv/
+.env/
+
+# Ignore dbt target directory
+target/
+
+# Ignore dbt logs
+logs/
+
+# Ignore sensitive dbt files
+profiles.yml
+secrets.env
+
+# Ignore Airflow logs and configuration
+airflow.cfg
+airflow.db
+logs/
