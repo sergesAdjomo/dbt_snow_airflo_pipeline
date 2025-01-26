@@ -16,4 +16,4 @@ SELECT
     l_tax as tax_rate,
 
 FROM
-    {{ source('tpch', 'lineitems') }}
+    {{ source('tpch', 'lineitem') }}
