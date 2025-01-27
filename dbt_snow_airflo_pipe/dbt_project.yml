@@ -37,6 +37,7 @@ models:
       snowflake_warehouse: dbt_snow_wh
     marts:
       +schema: marts_fact_schema
-    # +schema_override: true
+      +schema_override: true
+      +generate_schema_name: true
       +materialized: table
       snowflake_wharehouse: dbt_snow_wh

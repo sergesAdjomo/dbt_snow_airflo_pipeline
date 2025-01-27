@@ -1,8 +1,13 @@
 version: 2
 
+# Configuration du schéma au niveau du modèle
 models:
   - name: fact_orders
     description: "Table de fait contenant les lignes de commandes enrichies"
+    # Définition explicite du schéma pour ce modèle
+    config:
+      schema: marts_fact_schema
+      materialized: table
     columns:
       - name: order_item_key
         description: "Clé surrogate unique pour chaque ligne de commande"
