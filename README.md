@@ -20,18 +20,97 @@ dbt_snowflake/
 
 ## Prerequisites
 - Snowflake account and credentials
-- dbt Core installed
 - Python 3.8+
+- pip (Python package installer)
 - (Coming soon) Apache Airflow
 
-## Configuration
-1. Ensure your `profiles.yml` is properly configured with your Snowflake credentials
-2. The project uses the following default configurations in `dbt_project.yml`:
-   - Custom schema naming
-   - Materialization strategies
-   - Model-specific configurations
+## Detailed Setup Instructions
 
-## Models
+### 1. Install Required Packages
+```bash
+# Install dbt core and snowflake adapter
+pip install dbt-core
+pip install dbt-snowflake
+```
+
+### 2. Snowflake Account Setup
+Before proceeding with dbt configuration, ensure you have:
+1. A Snowflake account with appropriate access
+2. Created necessary database objects:
+   - Database
+   - Schemas (dev, prod)
+   - Warehouse
+   - Roles with appropriate privileges
+
+### 3. Initialize DBT Project
+```bash
+# Initialize a new dbt project
+dbt init
+
+# Follow the interactive prompts:
+1. Enter your project name
+2. Select 'snowflake' as your database
+3. Configure Snowflake credentials:
+   - Account (your_account.region.cloud_platform)
+   - User
+   - Password
+   - Role
+   - Warehouse
+   - Database
+   - Schema
+   - Number of threads
+```
+
+### 4. Configure dbt_project.yml
+Your `dbt_project.yml` should be configured with:
+```yaml
+name: 'your_project_name'
+version: '1.0.0'
+config-version: 2
+
+profile: 'your_profile_name'
+
+model-paths: ["models"]
+analysis-paths: ["analyses"]
+test-paths: ["tests"]
+seed-paths: ["seeds"]
+macro-paths: ["macros"]
+snapshot-paths: ["snapshots"]
+
+target-path: "target"
+clean-targets:
+    - "target"
+    - "dbt_packages"
+
+models:
+  your_project_name:
+    staging:
+      +materialized: view
+    intermediate:
+      +materialized: table
+    marts:
+      +materialized: table
+```
+
+### 5. Configure profiles.yml
+Create/update `~/.dbt/profiles.yml`:
+```yaml
+your_profile_name:
+  target: dev
+  outputs:
+    dev:
+      type: snowflake
+      account: your_account
+      user: your_user
+      password: your_password
+      role: your_role
+      warehouse: your_warehouse
+      database: your_database
+      schema: your_schema
+      threads: 4
+```
+
+## Model Organization
 The project follows a layered architecture:
 - **Staging**: Raw data models with minimal transformations
 - **Intermediate**: Models that combine and transform staging models
@@ -42,28 +121,9 @@ The project follows a layered architecture:
 - Custom data tests in `tests/` directory
 - Run tests using `dbt test`
 
-## Current Status
-✅ Implemented:
-- dbt project structure
-- Core transformations
-- Data models
-- Tests and documentation
-
-🚧 In Progress:
-- Apache Airflow integration for orchestration
-- Task scheduling and dependencies
-- Pipeline monitoring and alerting
-
-## Upcoming Features (Airflow Integration)
-- DAG creation for dbt tasks
-- Automated scheduling
-- Dependencies management
-- Error handling and notifications
-- Monitoring dashboard
-
 ## Usage
 1. Clone the repository
-2. Set up your `profiles.yml`
+2. Follow the setup instructions above
 3. Run `dbt deps` to install dependencies
 4. Run `dbt build` to execute all models
 
