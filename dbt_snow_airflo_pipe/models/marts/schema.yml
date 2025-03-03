@@ -1,0 +1,46 @@
+version: 2
+
+# Configuration du schéma au niveau du modèle
+models:
+  - name: fact_orders
+    description: "Table de fait contenant les lignes de commandes enrichies"
+    # Définition explicite du schéma pour ce modèle
+    config:
+      schema: marts_fact_schema
+      materialized: table
+    columns:
+      - name: order_item_key
+        description: "Clé surrogate unique pour chaque ligne de commande"
+        tests:
+          - unique
+          - not_null
+          
+      - name: order_key
+        description: "Clé étrangère vers la dimension orders"
+        tests:
+          - not_null
+          
+      - name: part_key
+        description: "Clé étrangère vers la dimension parts"
+        tests:
+          - not_null
+          
+      - name: quantity
+        description: "Quantité commandée"
+        tests:
+          - not_null
+          
+      - name: extended_price
+        description: "Prix avant remise et taxes"
+        
+      - name: discount_percentage
+        description: "Pourcentage de remise appliqué"
+        
+      - name: tax_rate
+        description: "Taux de taxe appliqué"
+        
+      - name: discounted_price
+        description: "Prix après remise, avant taxes"
+        
+      - name: final_price
+        description: "Prix final après remise et taxes"

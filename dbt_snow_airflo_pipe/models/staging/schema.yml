@@ -1,0 +1,8 @@
+version: 2
+
+sources:
+  - name: tpch
+    schema: tpch
+    database: dbt_snow_db
+    tables:
+      - name: lineitems

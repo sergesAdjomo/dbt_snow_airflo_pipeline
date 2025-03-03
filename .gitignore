@@ -1,16 +1,39 @@
 # Ignore Python compiled files
 *.pyc
 __pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
 
 # Ignore virtual environment directories
 venv/
-.env/
+ENV/
 
 # Ignore dbt target directory
 target/
+dbt_packages/
 
 # Ignore dbt logs
 logs/
+.user.yml
+package-lock.yml
 
 # Ignore sensitive dbt files
 profiles.yml
@@ -20,3 +43,17 @@ secrets.env
 airflow.cfg
 airflow.db
 logs/
+
+# Ignore IDE files
+.idea/
+.vscode/
+*.swp
+*.swo
+
+# Ignore OS files
+.DS_Store
+Thumbs.db
+
+# Ignore Local development files
+.env
+*.log
