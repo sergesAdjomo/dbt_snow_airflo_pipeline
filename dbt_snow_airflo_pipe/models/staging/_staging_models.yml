@@ -1,0 +1,31 @@
+version: 2
+
+models:
+  - name: stg_customers
+    description: Cleaned customer data from source system
+    columns:
+      - name: customer_id
+        description: Primary key of the customer
+        tests:
+          - unique
+          - not_null
+      - name: customer_name
+        description: Full name of the customer
+      - name: market_segment
+        description: Market segment the customer belongs to
+
+  - name: stg_orders
+    description: Order header information
+    columns:
+      - name: order_id
+        description: Primary key of the order
+        tests:
+          - unique
+          - not_null
+      - name: customer_id
+        description: Foreign key to customers
+        tests:
+          - not_null
+          - relationships:
+              to: ref('stg_customers')
+              field: customer_id

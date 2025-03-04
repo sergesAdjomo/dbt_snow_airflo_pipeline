@@ -30,14 +30,17 @@ clean-targets:         # directories to be removed by `dbt clean`
 # directory as views. These settings can be overridden in the individual model
 # files using the `{{ config(...) }}` macro.
 models:
-  dbt_snow_airflo_pipe:
-    # Config indicated by + and applies to all files under models/example/
+  retail_analytics:
     staging:
-      materialized: view
-      snowflake_warehouse: dbt_snow_wh
+      +materialized: view
+      +schema: staging
+    intermediate:
+      +materialized: view
+      +schema: intermediate
     marts:
-      +schema: marts_fact_schema
-      +schema_override: true
-      +generate_schema_name: true
       +materialized: table
-      snowflake_wharehouse: dbt_snow_wh
+      +schema: marts
+
+seeds:
+  retail_analytics:
+    +schema: reference_data
